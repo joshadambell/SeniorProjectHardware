@@ -10,11 +10,7 @@
 #define PORT 2000
 #define LOCALHOST "localhost"
 
-void error(char *msg)
-{
-    perror(msg);
-    exit(0);
-}
+void error(char *msg);
 
 int main(int argc, char *argv[])
 {
@@ -39,7 +35,7 @@ int main(int argc, char *argv[])
 
     //portno = atoi(argv[2]);
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    
+
     if (sockfd < 0) 
         error("ERROR opening socket");
 
@@ -62,28 +58,24 @@ int main(int argc, char *argv[])
 
     if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0) 
         error("ERROR connecting");
-
     
     json_object_object_add(allData, "deviceid", deviceid);
 
+    // add JSONs to JSON array
     while(1)
     {   
         bzero(buffer,256);
 
         fgets(buffer,255,stdin);
-
-        printf("%s\n", buffer);
         
         if(buffer[0] == 's')
         {
-            printf("looop\n");
-
             time ( &rawtime );
             timeinfo = localtime ( &rawtime );  
 
             data1 = json_object_new_object();
            
-            json_object *d1 = json_object_new_int(1);
+            json_object *d1 = json_object_new_int(5);
             json_object *units = json_object_new_string("seconds");
             json_object *type1 = json_object_new_string("how many");
             json_object *time1 = json_object_new_string(asctime(timeinfo));         
@@ -96,7 +88,7 @@ int main(int argc, char *argv[])
             json_object_array_add(jarray, data1);         
 
             printf("The json object created: %s\n",json_object_to_json_string(data1));
-            printf("The json object created: %s\n",json_object_to_json_string(allData));
+            //printf("The json object created: %s\n",json_object_to_json_string(allData));
         }
 
         if(buffer[0] == 'd')
@@ -123,4 +115,12 @@ int main(int argc, char *argv[])
     printf("%s\n",buffer);
 
     return 0;
+}
+
+
+// for good error messages
+void error(char *msg)
+{
+    perror(msg);
+    exit(0);
 }
