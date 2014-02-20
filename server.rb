@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 require 'socket'               # Get sockets from stdlib
 require 'json'
 
@@ -11,3 +12,17 @@ loop {                         # Servers run forever
   client.puts "Connection closing"
   client.close                 # Disconnect from the client
 }
+=======
+require 'socket'
+require 'json'
+
+server = TCPServer.open(2000)
+loop {
+	client = server.accept
+	client.puts("REQUEST_OK")
+	client.puts "Connection closing"
+	request = client.gets
+	puts request
+	client.close
+}
+>>>>>>> Stashed changes

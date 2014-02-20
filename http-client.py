@@ -5,7 +5,7 @@ import threading
 import time
 
 DEVICE_ID = 1
-URL = 'http://localhost:3000/mattress_data'
+URL = 'http://10.0.1.5:3000/mattress_data'
 
 
 def sendData():
@@ -14,7 +14,7 @@ def sendData():
 	values = dict(mattress_datum=(dict(device_id=DEVICE_ID, 
     					 		   type='how many', 
     					           data=count, 
-    					           units='seconds', 
+    					           units='count', 
     						       date='date')))
 
 	req = urllib2.Request(URL)

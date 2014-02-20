@@ -8,7 +8,7 @@
 
 #define DEVICE_ID 1
 #define PORT 2000
-#define LOCALHOST "localhost"
+#define LOCALHOST "10.0.1.5"
 
 void error(char *msg);
 
@@ -68,14 +68,17 @@ int main(int argc, char *argv[])
 
         fgets(buffer,255,stdin);
         
-        if(buffer[0] == 's')
+	if(buffer[0] == 's')
+		break;
+
+        else
         {
             time ( &rawtime );
             timeinfo = localtime ( &rawtime );  
 
             data1 = json_object_new_object();
            
-            json_object *d1 = json_object_new_int(5);
+            json_object *d1 = json_object_new_int(atoi(buffer));
             json_object *units = json_object_new_string("seconds");
             json_object *type1 = json_object_new_string("how many");
             json_object *time1 = json_object_new_string(asctime(timeinfo));         
@@ -90,9 +93,6 @@ int main(int argc, char *argv[])
             printf("The json object created: %s\n",json_object_to_json_string(data1));
             //printf("The json object created: %s\n",json_object_to_json_string(allData));
         }
-
-        if(buffer[0] == 'd')
-            break;
     }
 
     // add array to data object
