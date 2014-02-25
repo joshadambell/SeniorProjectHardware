@@ -4,7 +4,6 @@ import random
 import threading
 import time
 import RPi.GPIO as GPIO
-import strftime
 
 DEVICE_ID = 1
 URL = 'http://10.0.1.5:3000/mattress_data'
@@ -29,7 +28,7 @@ def sendData():
     					 		   type='how many', 
     					           data=peoplecount, 
     					           units='count', 
-    						       date=strftime("%Y-%m-%d %H:%M:%S"))))
+    						       date=time.strftime("%Y-%m-%d %H:%M:%S"))))
 
 	try:
 		req = urllib2.Request(URL)
@@ -40,7 +39,3 @@ def sendData():
 		print rsp.getcode()
 	except:
 		print "Error in sending data"
-
-
-
-sendData()
