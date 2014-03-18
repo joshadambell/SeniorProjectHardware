@@ -12,10 +12,9 @@ GPIO.setup(7, GPIO.IN)
 peoplecount = 0
 
 
-
 def sendData():
 	
-	print "send"
+	print "send "+peoplecount
 
 	values = dict(mattress_datum=(dict(device_id=DEVICE_ID, 
     					 		   type='how many', 
@@ -33,11 +32,16 @@ def sendData():
 	except:
 		print "Error in sending data"
 
+	threading.Timer(60, sendData).start();
+
+sendData();
 
 while(1):
         presence = GPIO.input(7)
         if(presence):
-            threading.Timer(10, sendData).start()
             peoplecount += 1
             time.sleep(1.5)
         time.sleep(1)
+
+
+
